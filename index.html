@@ -1,0 +1,1010 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulasi Ujian Fungsi Kuadrat</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#edf2f7;
+ color:#203247;
+}
+header{
+ background:linear-gradient(120deg,#142d46,#2463a6);
+ color:white;
+ text-align:center;
+ padding:25px 15px;
+}
+header h1{margin:0 0 8px}
+header p{margin:0;color:#dce9f7}
+.container{
+ max-width:1050px;
+ margin:25px auto;
+ padding:0 15px;
+}
+.card{
+ background:white;
+ padding:22px;
+ border-radius:14px;
+ margin-bottom:18px;
+ box-shadow:0 4px 15px #0000000c;
+}
+h2{color:#173b5b;margin-top:0}
+input{
+ width:100%;
+ padding:12px;
+ border:1px solid #cbd5e1;
+ border-radius:8px;
+ margin:7px 0 15px;
+ font-size:15px;
+}
+button{
+ border:0;
+ border-radius:8px;
+ padding:11px 17px;
+ cursor:pointer;
+ font-weight:bold;
+}
+.primary{background:#087f8c;color:white}
+.secondary{background:#e4edf5;color:#17324d}
+.danger{background:#b42318;color:white}
+button:disabled{opacity:.5;cursor:not-allowed}
+.hidden{display:none!important}
+.info-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+ gap:12px;
+}
+.info{
+ background:#eef5fa;
+ padding:13px;
+ border-radius:10px;
+}
+.info strong{display:block;color:#2463a6;font-size:20px}
+.timer{
+ font-size:27px;
+ font-weight:bold;
+ color:#b42318;
+}
+.progress{
+ height:9px;
+ background:#e4eaf0;
+ border-radius:20px;
+ overflow:hidden;
+ margin:15px 0;
+}
+.progress-bar{
+ height:100%;
+ width:0;
+ background:#0f8b8d;
+}
+.question{
+ border:1px solid #dce5ee;
+ border-radius:12px;
+ padding:18px;
+ margin:15px 0;
+}
+.question h3{margin-top:0;color:#173b5b}
+.option{
+ display:block;
+ padding:11px;
+ margin:7px 0;
+ border:1px solid #d8e1ea;
+ border-radius:8px;
+ cursor:pointer;
+}
+.option:hover{background:#edf7f7}
+.option input{width:auto;margin:0 8px 0 0}
+.nav-grid{
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:8px;
+ margin-top:15px;
+}
+.nav-number{
+ background:#e5edf5;
+ color:#17324d;
+}
+.nav-number.answered{
+ background:#0f8b8d;
+ color:white;
+}
+.nav-number.current{
+ outline:3px solid #f2b84b;
+}
+.question-nav{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-top:20px;
+}
+.warning{
+ background:#fff0f0;
+ color:#a21d1d;
+ border:2px solid #dc4444;
+ padding:16px;
+ border-radius:10px;
+ margin:15px 0;
+ font-weight:bold;
+}
+.success{
+ background:#e8f7ef;
+ border-left:4px solid #198754;
+ padding:15px;
+ border-radius:8px;
+}
+.result-score{
+ font-size:42px;
+ color:#087f8c;
+ font-weight:bold;
+}
+.review-item{
+ border-bottom:1px solid #e1e7ed;
+ padding:13px 0;
+}
+.correct{color:#087f55;font-weight:bold}
+.wrong{color:#b42318;font-weight:bold}
+footer{
+ text-align:center;
+ padding:25px;
+ color:#68798a;
+}
+@media(max-width:600px){
+ .card{padding:15px}
+ .nav-grid{grid-template-columns:repeat(4,1fr)}
+ .timer{font-size:23px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>SIMULASI UJIAN MATEMATIKA</h1>
+<p>Materi Persamaan dan Fungsi Kuadrat</p>
+<p>Berpikir Kritis • Analisis • Pemecahan Masalah</p>
+</header>
+
+<div class="container">
+
+<!-- HALAMAN IDENTITAS -->
+<section id="startPage" class="card">
+<h2>Petunjuk dan Identitas Peserta</h2>
+
+<p>Selamat datang dalam Simulasi Ujian Matematika. Bacalah aturan ujian sebelum memulai.</p>
+
+<div class="info-grid">
+<div class="info">Jumlah soal<strong>20 Soal</strong></div>
+<div class="info">Waktu<strong>45 Menit</strong></div>
+<div class="info">Kesempatan<strong>2 Kali</strong></div>
+<div class="info">Pelanggaran<strong>Maksimal 2</strong></div>
+</div>
+
+<h3>Identitas Peserta</h3>
+
+<label>Nama Lengkap</label>
+<input id="studentName" type="text" placeholder="Masukkan nama lengkap">
+
+<label>Kelas</label>
+<input id="studentClass" type="text" placeholder="Contoh: X-1">
+
+<div class="warning">
+ATURAN UJIAN:
+<ul>
+<li>Peserta hanya memiliki 2 kali kesempatan ujian.</li>
+<li>Waktu pengerjaan adalah 45 menit.</li>
+<li>Dilarang berpindah tab atau meninggalkan halaman ujian.</li>
+<li>Dilarang menyalin soal atau membuka menu klik kanan.</li>
+<li>Setiap pelanggaran akan memunculkan alarm dan peringatan.</li>
+<li>Jika pelanggaran mencapai 3 kali, ujian otomatis dihentikan.</li>
+<li>Jawaban akan dikumpulkan ketika waktu habis atau ujian dihentikan.</li>
+</ul>
+</div>
+
+<label>
+<input type="checkbox" id="agree" style="width:auto">
+Saya telah membaca dan menyetujui seluruh peraturan ujian.
+</label>
+
+<br><br>
+
+<button class="secondary" onclick="enableSound()" id="soundButton">
+Aktifkan Suara Alarm
+</button>
+
+<p id="soundStatus">Suara alarm belum diaktifkan.</p>
+
+<button class="primary" onclick="startExam()" id="startButton">
+Mulai Ujian
+</button>
+
+<div id="attemptInfo" class="success" style="margin-top:18px"></div>
+</section>
+
+<!-- HALAMAN UJIAN -->
+<section id="examPage" class="hidden">
+
+<div class="card">
+<div class="info-grid">
+<div class="info">Peserta<strong id="displayName">-</strong></div>
+<div class="info">Kelas<strong id="displayClass">-</strong></div>
+<div class="info">Percobaan<strong id="attemptDisplay">1/2</strong></div>
+<div class="info">Waktu tersisa<strong class="timer" id="timer">45:00</strong></div>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div id="progressText">Soal dijawab: 0 dari 20</div>
+
+<div id="violationInfo" class="warning">
+Jumlah pelanggaran: <span id="violationCount">0</span> / 3
+</div>
+</div>
+
+<div class="card">
+<div id="questionContainer"></div>
+
+<div class="question-nav">
+<button class="secondary" onclick="previousQuestion()">← Sebelumnya</button>
+<button class="primary" onclick="nextQuestion()">Berikutnya →</button>
+</div>
+
+<h3>Navigasi Nomor Soal</h3>
+<div id="numberNavigation" class="nav-grid"></div>
+
+<br>
+<button class="danger" onclick="finishConfirmation()">Selesaikan Ujian</button>
+</div>
+
+</section>
+
+<!-- HALAMAN HASIL -->
+<section id="resultPage" class="card hidden">
+<h2>HASIL SIMULASI UJIAN</h2>
+
+<div class="success">
+Ujian telah selesai. Berikut adalah hasil pengerjaan peserta.
+</div>
+
+<p>Nama: <b id="resultName"></b></p>
+<p>Kelas: <b id="resultClass"></b></p>
+<p>Percobaan: <b id="resultAttempt"></b></p>
+
+<div class="result-score" id="finalScore">0</div>
+<p>Nilai Akhir</p>
+
+<div class="info-grid">
+<div class="info">Benar<strong id="correctCount">0</strong></div>
+<div class="info">Salah<strong id="wrongCount">0</strong></div>
+<div class="info">Kosong<strong id="emptyCount">0</strong></div>
+<div class="info">Pelanggaran<strong id="finalViolations">0</strong></div>
+</div>
+
+<p id="resultMessage"></p>
+
+<button class="primary" onclick="showReview()">Lihat Pembahasan</button>
+<button class="secondary" onclick="printResult()">Cetak Hasil</button>
+<button class="secondary" onclick="location.reload()">Kembali</button>
+
+<div id="reviewArea" class="hidden">
+<h2>Pembahasan Jawaban</h2>
+<div id="reviewContent"></div>
+</div>
+
+<div class="card" style="margin-top:20px">
+<h3>Riwayat Percobaan</h3>
+<div id="history"></div>
+</div>
+</section>
+
+</div>
+
+<footer>
+Simulasi Ujian Matematika • Persamaan dan Fungsi Kuadrat
+</footer>
+
+<script>
+
+/* =====================================
+   PENGATURAN DASAR
+===================================== */
+
+const STORAGE_KEY = "ujian_fungsi_kuadrat_v1";
+const TOTAL_TIME = 45 * 60;
+const MAX_ATTEMPTS = 2;
+const MAX_VIOLATIONS = 3;
+
+let state = loadState();
+let currentQuestion = 0;
+let timerInterval = null;
+let audioContext = null;
+let soundEnabled = false;
+let examFinished = false;
+let warningCooldown = false;
+
+function loadState(){
+ try{
+  return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+   attempts:0,
+   active:null,
+   history:[]
+  };
+ }catch(e){
+  return {attempts:0,active:null,history:[]};
+ }
+}
+
+function saveState(){
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+}
+
+function shuffle(array){
+ const result=[...array];
+ for(let i=result.length-1;i>0;i--){
+  const j=Math.floor(Math.random()*(i+1));
+  [result[i],result[j]]=[result[j],result[i]];
+ }
+ return result;
+}
+
+/* =====================================
+   BANK SOAL
+===================================== */
+
+const questionBank=[
+
+{
+q:"Grafik fungsi f(x) = 2x² − 8x + 5 terbuka ke arah ....",
+o:["Atas","Bawah","Kanan","Kiri","Tidak memiliki grafik"],
+a:0,
+e:"Koefisien a positif, sehingga parabola terbuka ke atas."
+},
+
+{
+q:"Sumbu simetri fungsi f(x) = x² − 6x + 8 adalah ....",
+o:["x = −3","x = 3","x = 6","x = 8","x = −6"],
+a:1,
+e:"Sumbu simetri x = −b/(2a) = 6/2 = 3."
+},
+
+{
+q:"Titik puncak fungsi f(x) = −x² + 4x + 1 adalah ....",
+o:["(2,5)","(−2,5)","(2,1)","(4,1)","(−4,1)"],
+a:0,
+e:"x puncak = 2 dan f(2) = 5."
+},
+
+{
+q:"Jika diskriminan suatu fungsi kuadrat negatif, grafik ....",
+o:["Memotong sumbu X di dua titik","Menyinggung sumbu X","Tidak memotong sumbu X","Selalu terbuka ke atas","Memotong sumbu Y di dua titik"],
+a:2,
+e:"Diskriminan negatif berarti tidak terdapat akar real."
+},
+
+{
+q:"Pada fungsi f(x) = 3x² − 2x + 7, titik potong dengan sumbu Y adalah ....",
+o:["(7,0)","(0,7)","(0,−2)","(3,0)","(0,3)"],
+a:1,
+e:"Titik potong sumbu Y diperoleh ketika x = 0, sehingga y = c = 7."
+},
+
+{
+q:"Fungsi f(x) = −2x² + 12x − 7 memiliki nilai maksimum sebesar ....",
+o:["7","9","11","12","18"],
+a:2,
+e:"x puncak = 3. f(3) = −18 + 36 − 7 = 11."
+},
+
+{
+q:"Akar-akar persamaan x² − 7x + 12 = 0 adalah ....",
+o:["1 dan 12","2 dan 6","3 dan 4","−3 dan −4","−2 dan −6"],
+a:2,
+e:"x² − 7x + 12 = (x−3)(x−4), sehingga akarnya 3 dan 4."
+},
+
+{
+q:"Persamaan kuadrat yang memiliki akar 2 dan −5 adalah ....",
+o:["x² + 3x − 10 = 0","x² − 3x − 10 = 0","x² + 7x + 10 = 0","x² − 7x + 10 = 0","x² + 10x − 3 = 0"],
+a:0,
+e:"Jumlah akar −3 dan hasil kali −10, sehingga persamaannya x² + 3x − 10 = 0."
+},
+
+{
+q:"Grafik y = x² + 4x + 8 memiliki diskriminan ....",
+o:["−16","−8","0","8","16"],
+a:0,
+e:"D = 4² − 4(1)(8) = 16 − 32 = −16."
+},
+
+{
+q:"Sebuah bola memiliki lintasan h(t) = −t² + 8t + 2. Tinggi maksimum bola adalah ....",
+o:["16 meter","18 meter","20 meter","22 meter","24 meter"],
+a:1,
+e:"t puncak = 4. h(4) = −16 + 32 + 2 = 18 meter."
+},
+
+{
+q:"Fungsi keuntungan P(x) = −2x² + 40x − 100. Nilai x yang menghasilkan keuntungan maksimum adalah ....",
+o:["5","8","10","15","20"],
+a:2,
+e:"x puncak = −40/(2×−2) = 10."
+},
+
+{
+q:"Jika grafik y = ax² + bx + c terbuka ke bawah, maka ....",
+o:["a > 0","a < 0","b = 0","c = 0","a = 0"],
+a:1,
+e:"Parabola terbuka ke bawah jika koefisien a negatif."
+},
+
+{
+q:"Fungsi f(x) = x² − 10x + 25 menyinggung sumbu X karena ....",
+o:["a positif","b negatif","c positif","Diskriminan sama dengan nol","Diskriminan negatif"],
+a:3,
+e:"D = 100 − 100 = 0, sehingga grafik menyinggung sumbu X."
+},
+
+{
+q:"Sebuah taman berbentuk lengkungan parabola memiliki model y = −x² + 6x. Tinggi maksimum lengkungan adalah ....",
+o:["6 satuan","8 satuan","9 satuan","10 satuan","12 satuan"],
+a:2,
+e:"x puncak = 3 dan y = −9 + 18 = 9."
+},
+
+{
+q:"Grafik fungsi y = 2(x−3)² + 4 memiliki titik puncak ....",
+o:["(−3,4)","(3,4)","(4,3)","(3,−4)","(−3,−4)"],
+a:1,
+e:"Bentuk puncak y = a(x−p)² + q memiliki titik puncak (p,q)."
+},
+
+{
+q:"Jika fungsi f(x) = x² + bx + 9 memiliki sumbu simetri x = −4, nilai b adalah ....",
+o:["−8","−4","4","8","9"],
+a:3,
+e:"−b/2 = −4, sehingga b = 8."
+},
+
+{
+q:"Sebuah benda dilempar dengan model h(t) = −5t² + 20t. Benda mencapai tinggi maksimum setelah ....",
+o:["1 detik","2 detik","3 detik","4 detik","5 detik"],
+a:1,
+e:"t puncak = −20/(2×−5) = 2 detik."
+},
+
+{
+q:"Persamaan kuadrat dengan akar kembar 4 adalah ....",
+o:["x² − 4x + 4 = 0","x² + 4x + 4 = 0","x² − 8x + 16 = 0","x² + 8x + 16 = 0","x² − 16 = 0"],
+a:2,
+e:"Akar kembar 4 menghasilkan (x−4)² = x² − 8x + 16."
+},
+
+{
+q:"Sebuah perusahaan memodelkan keuntungan dengan P(x) = −x² + 12x − 20. Keuntungan maksimum terjadi ketika ....",
+o:["x = 4","x = 5","x = 6","x = 8","x = 12"],
+a:2,
+e:"x puncak = −12/(2×−1) = 6."
+},
+
+{
+q:"Grafik fungsi kuadrat memiliki titik puncak (2,−3) dan terbuka ke atas. Pernyataan yang benar adalah ....",
+o:["Memiliki nilai maksimum −3","Memiliki nilai minimum −3","Tidak memiliki nilai ekstrem","Selalu memotong sumbu X","Tidak memiliki sumbu simetri"],
+a:1,
+e:"Parabola terbuka ke atas memiliki nilai minimum pada titik puncaknya."
+}
+
+];
+
+/* =====================================
+   SUARA ALARM
+===================================== */
+
+async function enableSound(){
+ try{
+  const AudioCtx=window.AudioContext||window.webkitAudioContext;
+  if(!AudioCtx){
+   document.getElementById("soundStatus").textContent="Browser tidak mendukung Web Audio API.";
+   return;
+  }
+  if(!audioContext) audioContext=new AudioCtx();
+  await audioContext.resume();
+  soundEnabled=true;
+  document.getElementById("soundStatus").textContent="✓ Suara alarm berhasil diaktifkan.";
+  document.getElementById("soundButton").textContent="Suara Alarm Aktif";
+  document.getElementById("soundButton").disabled=true;
+ }catch(e){
+  document.getElementById("soundStatus").textContent="Gagal mengaktifkan suara. Coba kembali.";
+ }
+}
+
+function playAlarm(){
+ if(!soundEnabled||!audioContext)return;
+ try{
+  const oscillator=audioContext.createOscillator();
+  const gain=audioContext.createGain();
+  oscillator.type="sawtooth";
+  oscillator.frequency.value=880;
+  gain.gain.value=0.12;
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+  oscillator.start();
+  oscillator.stop(audioContext.currentTime+1.2);
+ }catch(e){}
+}
+
+/* =====================================
+   MEMULAI UJIAN
+===================================== */
+
+function startExam(){
+
+ if(state.active){
+  alert("Masih ada ujian yang sedang berlangsung. Ujian akan dilanjutkan.");
+  resumeExam();
+  return;
+ }
+
+ const name=document.getElementById("studentName").value.trim();
+ const kelas=document.getElementById("studentClass").value.trim();
+
+ if(!name||!kelas){
+  alert("Lengkapi nama dan kelas terlebih dahulu.");
+  return;
+ }
+
+ if(!document.getElementById("agree").checked){
+  alert("Silakan setujui peraturan ujian terlebih dahulu.");
+  return;
+ }
+
+ if(!soundEnabled){
+  alert("Aktifkan suara alarm terlebih dahulu sebelum memulai ujian.");
+  return;
+ }
+
+ if(state.attempts>=MAX_ATTEMPTS){
+  alert("Kesempatan ujian sudah habis.");
+  return;
+ }
+
+ state.attempts++;
+
+ state.active={
+  name:name,
+  kelas:kelas,
+  attempt:state.attempts,
+  questions:shuffle(questionBank.map((q,i)=>i)),
+  answers:{},
+  violations:0,
+  endAt:Date.now()+TOTAL_TIME*1000,
+  startedAt:Date.now()
+ };
+
+ saveState();
+ resumeExam();
+}
+
+function resumeExam(){
+ if(!state.active)return;
+
+ examFinished=false;
+ currentQuestion=0;
+
+ document.getElementById("startPage").classList.add("hidden");
+ document.getElementById("resultPage").classList.add("hidden");
+ document.getElementById("examPage").classList.remove("hidden");
+
+ document.getElementById("displayName").textContent=state.active.name;
+ document.getElementById("displayClass").textContent=state.active.kelas;
+ document.getElementById("attemptDisplay").textContent=state.active.attempt+"/2";
+
+ renderQuestion();
+ renderNavigation();
+ updateProgress();
+ updateViolations();
+
+ startTimer();
+}
+
+/* =====================================
+   MENAMPILKAN SOAL
+===================================== */
+
+function getQuestion(index){
+ const originalIndex=state.active.questions[index];
+ return questionBank[originalIndex];
+}
+
+function renderQuestion(){
+ const q=getQuestion(currentQuestion);
+ const selected=state.active.answers[currentQuestion];
+
+ let html='<div class="question">';
+ html+='<h3>Soal '+(currentQuestion+1)+' dari 20</h3>';
+ html+='<p>'+q.q+'</p>';
+
+ q.o.forEach((option,index)=>{
+  const checked=selected===index?"checked":"";
+  html+='<label class="option">';
+  html+='<input type="radio" name="answer" value="'+index+'" '+checked+' onchange="saveAnswer('+index+')">';
+  html+=String.fromCharCode(65+index)+'. '+option;
+  html+='</label>';
+ });
+
+ html+='</div>';
+
+ document.getElementById("questionContainer").innerHTML=html;
+}
+
+function saveAnswer(index){
+ state.active.answers[currentQuestion]=index;
+ saveState();
+ renderNavigation();
+ updateProgress();
+}
+
+function previousQuestion(){
+ if(currentQuestion>0){
+  currentQuestion--;
+  renderQuestion();
+  renderNavigation();
+ }
+}
+
+function nextQuestion(){
+ if(currentQuestion<19){
+  currentQuestion++;
+  renderQuestion();
+  renderNavigation();
+ }
+}
+
+function goToQuestion(index){
+ currentQuestion=index;
+ renderQuestion();
+ renderNavigation();
+}
+
+/* =====================================
+   NAVIGASI DAN PROGRES
+===================================== */
+
+function renderNavigation(){
+ const nav=document.getElementById("numberNavigation");
+ nav.innerHTML="";
+
+ for(let i=0;i<20;i++){
+  const btn=document.createElement("button");
+  btn.textContent=i+1;
+  btn.className="nav-number";
+  if(state.active.answers[i]!==undefined)btn.classList.add("answered");
+  if(i===currentQuestion)btn.classList.add("current");
+  btn.onclick=()=>goToQuestion(i);
+  nav.appendChild(btn);
+ }
+}
+
+function updateProgress(){
+ const answered=Object.keys(state.active.answers).length;
+ document.getElementById("progressBar").style.width=(answered/20*100)+"%";
+ document.getElementById("progressText").textContent="Soal dijawab: "+answered+" dari 20";
+}
+
+/* =====================================
+   TIMER
+===================================== */
+
+function startTimer(){
+ if(timerInterval)clearInterval(timerInterval);
+
+ timerInterval=setInterval(()=>{
+  if(!state.active){
+   clearInterval(timerInterval);
+   return;
+  }
+
+  const remaining=Math.max(0,Math.ceil((state.active.endAt-Date.now())/1000));
+  const minutes=Math.floor(remaining/60);
+  const seconds=remaining%60;
+
+  document.getElementById("timer").textContent=
+   String(minutes).padStart(2,"0")+":"+
+   String(seconds).padStart(2,"0");
+
+  if(remaining<=0){
+   clearInterval(timerInterval);
+   finishExam("Waktu ujian telah habis.");
+  }
+ },1000);
+}
+
+/* =====================================
+   SISTEM PELANGGARAN
+===================================== */
+
+function registerViolation(reason){
+
+ if(!state.active||examFinished||warningCooldown)return;
+
+ warningCooldown=true;
+ setTimeout(()=>warningCooldown=false,1200);
+
+ state.active.violations++;
+ saveState();
+
+ playAlarm();
+ updateViolations();
+
+ alert(
+  "PERINGATAN! Aktivitas tidak diperbolehkan selama ujian.\n\n"+
+  "Pelanggaran: "+reason+
+  "\nJumlah pelanggaran: "+state.active.violations+
+  " dari "+MAX_VIOLATIONS
+ );
+
+ if(state.active&&state.active.violations>=MAX_VIOLATIONS){
+  finishExam("Ujian dihentikan karena mencapai 3 kali pelanggaran.");
+ }
+}
+
+function updateViolations(){
+ if(!state.active)return;
+ document.getElementById("violationCount").textContent=state.active.violations;
+}
+
+/* Berpindah tab atau aplikasi */
+document.addEventListener("visibilitychange",()=>{
+ if(document.hidden){
+  registerViolation("Berpindah tab atau meninggalkan halaman.");
+ }
+});
+
+/* Keluar dari jendela browser */
+window.addEventListener("blur",()=>{
+ registerViolation("Jendela ujian tidak aktif.");
+});
+
+/* Klik kanan */
+document.addEventListener("contextmenu",e=>{
+ if(state.active){
+  e.preventDefault();
+  registerViolation("Membuka menu klik kanan.");
+ }
+});
+
+/* Menyalin teks */
+document.addEventListener("copy",e=>{
+ if(state.active){
+  e.preventDefault();
+  registerViolation("Mencoba menyalin teks.");
+ }
+});
+
+/* Kombinasi tombol */
+document.addEventListener("keydown",e=>{
+ if(!state.active)return;
+
+ const key=e.key.toLowerCase();
+
+ if(
+  (e.ctrlKey&&(key==="c"||key==="u"||key==="s"||key==="p"))||
+  (e.ctrlKey&&e.shiftKey&&(key==="i"||key==="j"||key==="c"))||
+  key==="f12"
+ ){
+  e.preventDefault();
+  registerViolation("Menggunakan kombinasi tombol yang dilarang.");
+ }
+});
+
+/* =====================================
+   MENYELESAIKAN UJIAN
+===================================== */
+
+function finishConfirmation(){
+ if(!state.active)return;
+
+ const unanswered=20-Object.keys(state.active.answers).length;
+
+ const message=
+ "Apakah kamu yakin ingin menyelesaikan ujian?\n"+
+ "Soal yang belum dijawab: "+unanswered;
+
+ if(confirm(message)){
+  finishExam("Peserta menyelesaikan ujian.");
+ }
+}
+
+function finishExam(reason){
+ if(!state.active||examFinished)return;
+
+ examFinished=true;
+
+ if(timerInterval)clearInterval(timerInterval);
+
+ const active=state.active;
+ let correct=0;
+ let wrong=0;
+ let empty=0;
+
+ for(let i=0;i<20;i++){
+  const q=getQuestionFromActive(active,i);
+  const answer=active.answers[i];
+
+  if(answer===undefined)empty++;
+  else if(answer===q.a)correct++;
+  else wrong++;
+ }
+
+ const score=correct*5;
+
+ const result={
+  name:active.name,
+  kelas:active.kelas,
+  attempt:active.attempt,
+  score:score,
+  correct:correct,
+  wrong:wrong,
+  empty:empty,
+  violations:active.violations,
+  reason:reason,
+  date:new Date().toLocaleString("id-ID"),
+  questions:active.questions,
+  answers:active.answers
+ };
+
+ state.history.push(result);
+ state.active=null;
+ saveState();
+
+ showResult(result);
+}
+
+function getQuestionFromActive(active,index){
+ return questionBank[active.questions[index]];
+}
+
+/* =====================================
+   HASIL UJIAN
+===================================== */
+
+function showResult(result){
+
+ document.getElementById("examPage").classList.add("hidden");
+ document.getElementById("startPage").classList.add("hidden");
+ document.getElementById("resultPage").classList.remove("hidden");
+
+ document.getElementById("resultName").textContent=result.name;
+ document.getElementById("resultClass").textContent=result.kelas;
+ document.getElementById("resultAttempt").textContent=result.attempt;
+ document.getElementById("finalScore").textContent=result.score;
+ document.getElementById("correctCount").textContent=result.correct;
+ document.getElementById("wrongCount").textContent=result.wrong;
+ document.getElementById("emptyCount").textContent=result.empty;
+ document.getElementById("finalViolations").textContent=result.violations;
+
+ document.getElementById("resultMessage").textContent=
+ result.reason+" Nilai dihitung berdasarkan jawaban benar, dengan bobot 5 poin setiap soal.";
+
+ renderHistory();
+ buildReview(result);
+
+ const attemptsLeft=MAX_ATTEMPTS-state.attempts;
+
+ if(attemptsLeft>0){
+  const btn=document.createElement("button");
+  btn.className="primary";
+  btn.textContent="Gunakan Kesempatan Kedua";
+  btn.onclick=()=>{
+   document.getElementById("resultPage").classList.add("hidden");
+   document.getElementById("startPage").classList.remove("hidden");
+   document.getElementById("attemptInfo").textContent=
+    "Kesempatan tersisa: "+attemptsLeft;
+   document.getElementById("studentName").value=result.name;
+   document.getElementById("studentClass").value=result.kelas;
+  };
+  document.getElementById("resultPage").insertBefore(
+   btn,document.getElementById("reviewArea")
+  );
+ }else{
+  const message=document.createElement("div");
+  message.className="warning";
+  message.textContent="Seluruh kesempatan ujian telah digunakan. Ujian telah dikunci.";
+  document.getElementById("resultPage").insertBefore(
+   message,document.getElementById("reviewArea")
+  );
+ }
+}
+
+function buildReview(result){
+ let html="";
+
+ for(let i=0;i<20;i++){
+  const q=questionBank[result.questions[i]];
+  const answer=result.answers[i];
+  const isCorrect=answer===q.a;
+
+  html+='<div class="review-item">';
+  html+='<b>Soal '+(i+1)+': '+q.q+'</b><br>';
+  html+='Jawaban benar: '+String.fromCharCode(65+q.a)+'. '+q.o[q.a]+'<br>';
+
+  if(answer===undefined){
+   html+='<span class="wrong">Tidak dijawab.</span><br>';
+  }else if(isCorrect){
+   html+='<span class="correct">Jawaban kamu benar.</span><br>';
+  }else{
+   html+='<span class="wrong">Jawaban kamu: '+String.fromCharCode(65+answer)+'. '+q.o[answer]+'</span><br>';
+  }
+
+  html+='<small>Pembahasan: '+q.e+'</small>';
+  html+='</div>';
+ }
+
+ document.getElementById("reviewContent").innerHTML=html;
+}
+
+function showReview(){
+ document.getElementById("reviewArea").classList.toggle("hidden");
+}
+
+function renderHistory(){
+ const history=document.getElementById("history");
+ if(!state.history.length){
+  history.textContent="Belum ada riwayat.";
+  return;
+ }
+
+ history.innerHTML=state.history.map(item=>
+  "<p>Percobaan "+item.attempt+
+  " — "+item.name+
+  " — Nilai: <b>"+item.score+"</b>"+
+  " — Pelanggaran: "+item.violations+
+  "</p>"
+ ).join("");
+}
+
+/* =====================================
+   CETAK HASIL
+===================================== */
+
+function printResult(){
+ window.print();
+}
+
+/* =====================================
+   INISIALISASI HALAMAN
+===================================== */
+
+function initialize(){
+
+ const info=document.getElementById("attemptInfo");
+
+ if(state.active){
+  info.textContent="Terdapat ujian yang belum selesai. Klik Mulai Ujian untuk melanjutkan.";
+  document.getElementById("studentName").value=state.active.name;
+  document.getElementById("studentClass").value=state.active.kelas;
+ }else{
+  const remaining=MAX_ATTEMPTS-state.attempts;
+  info.textContent="Kesempatan ujian tersisa: "+remaining+" dari 2.";
+ }
+
+ if(state.attempts>=MAX_ATTEMPTS&&!state.active){
+  document.getElementById("startButton").disabled=true;
+  info.textContent="Kesempatan ujian sudah habis. Ujian terkunci.";
+ }
+
+ renderHistory();
+}
+
+initialize();
+
+</script>
+</body>
+</html>
